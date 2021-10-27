@@ -51,7 +51,7 @@ Reset::
 	dec b
 	jr nz, .copyOAMDMA
 
-	WARN "Edit to set palettes here"
+	; WARN "Edit to set palettes here"
 	; CGB palettes maybe, DMG ones always
 
 	; You will also need to reset your handlers' variables below
@@ -63,6 +63,15 @@ Reset::
 
 	; Reset variables necessary for the VBlank handler to function correctly
 	; But only those for now
+
+	; DMG palette
+	ld a, %11100100
+	ldh [hBGP], a
+	ld [hOBP0], a
+
+	ld a, %00011011
+    ld [hOBP1], a
+
 	xor a
 	ldh [hVBlankFlag], a
 	ldh [hOAMHigh], a

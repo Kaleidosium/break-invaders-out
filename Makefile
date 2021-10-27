@@ -108,6 +108,10 @@ res/%.1bpp: res/%.png
 	@$(MKDIR_P) $(@D)
 	$(RGBGFX) -d 1 -o $@ $<
 
+res/%.2bpp: res/%.png
+	@$(MKDIR_P) $(@D)
+	$(RGBGFX) -d 2 -o $@ $<
+
 # Define how to compress files using the PackBits16 codec
 # Compressor script requires Python 3
 res/%.pb16: res/% src/tools/pb16.py
@@ -138,7 +142,7 @@ res/%.pb8.size: res/%
 $(BINDIR)/%.$(ROMEXT) $(BINDIR)/%.sym $(BINDIR)/%.map: $(patsubst src/%.asm,$(OBJDIR)/%.o,$(SRCS))
 	@$(MKDIR_P) $(@D)
 	$(RGBASM) $(ASFLAGS) -o $(OBJDIR)/build_date.o src/res/build_date.asm
-	$(RGBLINK) $(LDFLAGS) -m $(BINDIR)/$*.map -n $(BINDIR)/$*.sym -o $(BINDIR)/$*.$(ROMEXT) $^ $(OBJDIR)/build_date.o \
+	$(RGBLINK) -t $(LDFLAGS) -m $(BINDIR)/$*.map -n $(BINDIR)/$*.sym -o $(BINDIR)/$*.$(ROMEXT) $^ $(OBJDIR)/build_date.o \
 	&& $(RGBFIX) -v $(FIXFLAGS) $(BINDIR)/$*.$(ROMEXT)
 
 # `.mk` files are auto-generated dependency lists of the "root" ASM files, to save a lot of hassle.
