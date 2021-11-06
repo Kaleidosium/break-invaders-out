@@ -12,7 +12,10 @@ xTilemap::
     INCBIN "res/level01.tilemap"
 .end::
 
-SECTION "OAM Vars",WRAM0
+
+SECTION "OAM Vars", WRAM0
 
 wSpritePaddle:: DS 4*3
 wSpriteBall:: DS 4*1
+
+  

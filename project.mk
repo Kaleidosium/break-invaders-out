@@ -13,7 +13,7 @@ VERSION := 0
 GAMEID := BINO
 
 # Game title, up to 11 ASCII chars
-TITLE := GBBRKINVOUT
+TITLE := BRKINVOUT
 
 # New licensee, 2 ASCII chars
 # Homebrew games FTW!

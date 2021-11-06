@@ -4,3 +4,4 @@
 [submodule "src/include/rgbds-structs"]
 	path = src/include/rgbds-structs
 	url = https://github.com/ISSOtm/rgbds-structs.git
+t

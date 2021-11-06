@@ -42,6 +42,9 @@ DisplayActivate:
     ld [hLCDC], a
 
 GameLoop:
+    ; Need to call this every frame to get Metasprites working
+    call ResetShadowOAM
+
     ; Wait for the dispkat to finish updating
     call WaitVBlank
 
