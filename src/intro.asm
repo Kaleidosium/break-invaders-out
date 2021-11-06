@@ -13,7 +13,17 @@ INCLUDE "defines.asm"
 SECTION "Intro", ROMX
 
 Intro::
+InitialiseVariables:
+    ld a, 0
+    ld [hOAMIndex], a
+
+    ld hl, wPaddlePosition
+    ld [hl], LOW((SCRN_X / 2) << 4)
+    inc hl
+    ld [hl], HIGH((SCRN_X / 2) << 4)
+    
 TileCopy:
+    
     ; Copy the background tile data
     ld de, xTilesetBG
     ld hl, $9000

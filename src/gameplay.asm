@@ -4,11 +4,6 @@ SECTION "Sprite Paddle Update", ROM0
 
 SpritePaddleUpdate::
 
-    ld hl, wPaddlePosition
-    ld [hl], LOW((SCRN_X / 2) << 4)
-    inc hl
-    ld [hl], HIGH((SCRN_X / 2) << 4)
-
     ldh a, [hHeldKeys]
     bit PADB_LEFT, a
     jr nz, .moveLeft
@@ -26,21 +21,16 @@ SpritePaddleUpdate::
 
     ret
 .moveLeft
-    ; ld hl, wPaddlePosition ; Low byte
-    ; ld a, [hl]
-    
-    ; ; If going out of bounds, then do nothing
-    ; cp LOW(8 << 4)
-    ; jr c, .render
-    ld hl, wPaddlePosition + 1 ; High byte
-    
     ; If going out of bounds, then do nothing
+    ld hl, wPaddlePosition + 1 ; High byte
     ld a, [hld]
+
+    ; Add 1 to check for > instead of >=
     cp a, HIGH(8 << 4)
-    jr c, .inBoundsLeft
+    jr nc, .inBoundsLeft
     ld a, [hl]
     cp a, LOW(8 << 4)
-    jr nc, .render
+    jr c, .render
 
 .inBoundsLeft
     sub a, 1 << 4  ; Subtract 1.0 to low byte
@@ -52,19 +42,21 @@ SpritePaddleUpdate::
     jr .render
 
 .moveRight
-    ld hl, wPaddlePosition + 1 ; High byte
-    
     ; If going out of bounds, then do nothing
+
+    ld hl, wPaddlePosition + 1 ; High byte
     ld a, [hld]
-    cp a, HIGH(152 << 4)
+    
+    cp a, HIGH(8 << 4)
     jr c, .inBoundsRight
     ld a, [hl]
-    cp a, LOW(152 << 4)
+    cp a, LOW(8 << 4)
     jr nc, .render
 
 .inBoundsRight
     add a, 1 << 4  ; Add 1.0 to low byte
     ld [hli], a ; Write new value back
+    
     ; If no carry, nothing else to do
     jr nc, .render
     inc [hl]    ; Add carry to high byte (HL incremented by `ld [hli], a`)
@@ -79,8 +71,5 @@ PaddleMetasprite:
 
 SECTION "Position Vars", WRAM0
 ; Q12.4 fixed-point X posiition
-wMetaspritePosition:
-    dw
-
-wPaddlePosition:
+wPaddlePosition::
     ds 2
