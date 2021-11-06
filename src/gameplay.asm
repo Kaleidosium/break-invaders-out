@@ -26,7 +26,7 @@ SpritePaddleUpdate::
     ld a, [hld]
 
     ; Add 1 to check for > instead of >=
-    cp a, HIGH(8 << 4)
+    cp a, HIGH(8 << 4) + 1
     jr nc, .inBoundsLeft
     ld a, [hl]
     cp a, LOW(8 << 4)
@@ -56,7 +56,7 @@ SpritePaddleUpdate::
 .inBoundsRight
     add a, 1 << 4  ; Add 1.0 to low byte
     ld [hli], a ; Write new value back
-    
+
     ; If no carry, nothing else to do
     jr nc, .render
     inc [hl]    ; Add carry to high byte (HL incremented by `ld [hli], a`)
