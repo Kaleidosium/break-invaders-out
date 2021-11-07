@@ -47,7 +47,7 @@ SpritePaddleUpdate::
     ld hl, wPaddlePosition + 1 ; High byte
     ld a, [hld]
     
-    cp a, HIGH(148 << 4)
+    cp a, HIGH(148 << 4) ; SCRN_X - 12
     ld a, [hl]
     jr c, .inBoundsRight
     cp a, LOW(148 << 4)
