@@ -27,8 +27,8 @@ SpritePaddleUpdate::
 
     ; Add 1 to check for > instead of >=
     cp a, HIGH(8 << 4) + 1
-    jr nc, .inBoundsLeft
     ld a, [hl]
+    jr nc, .inBoundsLeft
     cp a, LOW(8 << 4)
     jr c, .render
 
@@ -47,10 +47,10 @@ SpritePaddleUpdate::
     ld hl, wPaddlePosition + 1 ; High byte
     ld a, [hld]
     
-    cp a, HIGH(8 << 4)
-    jr c, .inBoundsRight
+    cp a, HIGH(160 << 4)
     ld a, [hl]
-    cp a, LOW(8 << 4)
+    jr c, .inBoundsRight
+    cp a, LOW(160 << 4)
     jr nc, .render
 
 .inBoundsRight
