@@ -55,7 +55,7 @@ GameLoop:
     ; Need to call this every frame to get Metasprites working
     call ResetShadowOAM
 
-    ; Wait for the dispkat to finish updating
+    ; Wait for the display to finish updating
     call WaitVBlank
 
     ; Update the paddle and the OAM bytes

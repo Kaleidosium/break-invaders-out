@@ -11,7 +11,7 @@ SpritePaddleUpdate::
     jr nz, .moveRight
 
 .render
-    ld bc, (156.0 >> 12) & $FFFF ; Y Position of the Metasprite
+    ld bc, (152.0 >> 12) & $FFFF ; Y Position of the Metasprite
     ld a, [wPaddlePosition]
     ld e, a
     ld a, [wPaddlePosition + 1]
@@ -47,10 +47,10 @@ SpritePaddleUpdate::
     ld hl, wPaddlePosition + 1 ; High byte
     ld a, [hld]
     
-    cp a, HIGH(160 << 4)
+    cp a, HIGH(148 << 4)
     ld a, [hl]
     jr c, .inBoundsRight
-    cp a, LOW(160 << 4)
+    cp a, LOW(148 << 4)
     jr nc, .render
 
 .inBoundsRight
@@ -64,9 +64,9 @@ SpritePaddleUpdate::
 
 PaddleMetasprite:
     ; Offsets, not Positions
-    db -4, -12, $02, 0
-    db -4, -4, $03, 0
-    db -4, 4, $04, 0
+    db 0, 0, $02, 0
+    db 0, 8, $03, 0
+    db 0, 16, $04, 0
     db 128
 
 SECTION "Position Vars", WRAM0
