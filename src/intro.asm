@@ -10,17 +10,27 @@ INCLUDE "defines.asm"
 ; TILE_PADDLE_R EQU TILE_OFFSET+14
 ; TILE_BALL     EQU TILE_OFFSET+15
 
+DEF CENTRE_OF_SCREEN_X EQU $4C
+
 SECTION "Intro", ROMX
 
 Intro::
 InitialiseVariables:
-    ld a, 0
-    ld [hOAMIndex], a
+    ; Initialise hOAMIndex
+    xor a, a
+    ldh [hOAMIndex], a
 
+    ; Initialise wPaddlePosition X
     ld hl, wPaddlePosition
-    ld [hl], LOW((SCRN_X / 2) << 4)
+    ld [hl], LOW((CENTRE_OF_SCREEN_X) << 4)
     inc hl
-    ld [hl], HIGH((SCRN_X / 2) << 4)
+    ld [hl], HIGH((CENTRE_OF_SCREEN_X) << 4)
+
+    ; Initlaise wBallPosition
+    ld hl, wBallPosition
+    ld [hl], $80 ; Y
+    inc hl
+    ld [hl], CENTRE_OF_SCREEN_X + 1; X
     
 TileCopy:
     
@@ -60,6 +70,9 @@ GameLoop:
 
     ; Update the paddle and the OAM bytes
     call SpritePaddleUpdate
+
+    ; Update the ball
+    call SpriteBallUpdate
 
     ; Call the DMA subroutine we copied to HRAM,
     ; which then copies the bytes to the OAM and sprites begin to draw

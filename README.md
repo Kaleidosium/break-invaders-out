@@ -4,7 +4,7 @@ WIP Breakout/Space Invaders mashup for the original GameBoy (Maybe GBC in the fu
 
 Focusing on the Breakout part for now.
 
-## Special Thanks and Apologies to:
+## Special Thanks and Apologies to
 
 For helping me with the code
 
@@ -15,6 +15,7 @@ For helping me with the code
 - PinoBatch
 - DaKnig
 - tbsp
+- martendo
 - dan jia
   
 For his idea, which I stole

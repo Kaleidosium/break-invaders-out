@@ -1,11 +1,11 @@
 SECTION "Tiledata", ROMX
 
 xTilesetBG::
-    INCBIN "res/levels.tileset.BG.2bpp"
+    INCBIN "res/levels-tileset.BG.2bpp"
 .end::
 
 xTilesetSprites::
-    INCBIN "res/levels.tileset.SPRITES.2bpp"
+    INCBIN "res/levels-tileset.SPRITES.2bpp"
 .end::    
 
 xTilemap::

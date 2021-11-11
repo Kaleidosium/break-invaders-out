@@ -11,7 +11,7 @@ SpritePaddleUpdate::
     jr nz, .moveRight
 
 .render
-    ld bc, (152.0 >> 12) & $FFFF ; Y Position of the Metasprite
+    ld bc, (150.0 >> 12) & $FFFF ; Y Position of the Metasprite
     ld a, [wPaddlePosition]
     ld e, a
     ld a, [wPaddlePosition + 1]
@@ -64,12 +64,30 @@ SpritePaddleUpdate::
 
 PaddleMetasprite:
     ; Offsets, not Positions
-    db 0, 0, $02, 0
-    db 0, 8, $03, 0
-    db 0, 16, $04, 0
+    db 0, 0, $01, 0
+    db 0, 8, $02, 0
+    db 0, 16, $03, 0
     db 128
+
+SECTION "Sprite Ball Update", ROM0
+
+; TODO(alt): Bounch back if Ball goes OOB
+SpriteBallUpdate::
+    ld de, $0400
+    ld a, [wBallPosition]
+    dec a
+    ld [wBallPosition], a
+    ld b, a
+    ld a, [wBallPosition + 1]
+    ld c, a
+    call RenderSimpleSprite
+
+    ret
 
 SECTION "Position Vars", WRAM0
 ; Q12.4 fixed-point X posiition
 wPaddlePosition::
     ds 2
+
+wBallPosition::
+    ds 1
