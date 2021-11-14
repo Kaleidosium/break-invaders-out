@@ -21,16 +21,25 @@ InitialiseVariables:
     ldh [hOAMIndex], a
 
     ; Initialise wPaddlePosition X
-    ld hl, wPaddlePosition
+    ld hl, wPaddlePosition.x
     ld [hl], LOW((CENTRE_OF_SCREEN_X) << 4)
     inc hl
     ld [hl], HIGH((CENTRE_OF_SCREEN_X) << 4)
 
     ; Initlaise wBallPosition
-    ld hl, wBallPosition
+    ld hl, wBallPosition.y
     ld [hl], $80 ; Y
+
     inc hl
     ld [hl], CENTRE_OF_SCREEN_X + 1; X
+
+    ; Initialise wBallVelocity
+    ld hl, wBallVelocity.y
+    ld [hl], 1 ; Y
+    ; Make sure this optimization is valid (Asserts also serve as implicit documentation)
+    ASSERT wBallVelocity.y + 1 == wBallVelocity.x
+    inc hl
+    ld [hl], 1 ; X
     
 TileCopy:
     
