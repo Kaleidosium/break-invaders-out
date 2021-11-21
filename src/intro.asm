@@ -26,7 +26,7 @@ InitialiseVariables:
     inc hl
     ld [hl], HIGH((CENTRE_OF_SCREEN_X) << 4)
 
-    ; Initlaise wBallPosition
+    ; Initialise wBallPosition
     ld hl, wBallPosition.y
     ld [hl], $80 ; Y
 

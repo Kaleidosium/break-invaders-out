@@ -78,43 +78,65 @@ SpriteBallUpdate::
 .renderBall
     ld de, $0400
 
-    ; Check X position
-    ld a, [wBallPosition + 1]
-    dec a
+    ; Load X position and velocity
+    ; We're checking X first due to a bug if we checked Y first
+    ld a, [wBallPosition.x]
+    ld hl, wBallVelocity.x
+
+    add a, [hl]
 
     ; Check if we're out of bounds horizontally
-    ; if not, load the new value to wBallPosition + 1
+    ; if not, load the new value to wBallPosition
     cp a, 1
     jr c, .outOfBounds
     cp a, 168
     jr nc, .outOfBounds
-    ld [wBallPosition + 1], a
+    ld [wBallPosition.x], a
 
-    ; Check Y position
-    ld a, [wBallPosition]
-    dec a
+    ; Load Y position
+    ld a, [wBallPosition.y]
+    ld hl, wBallVelocity.y
+
+    add a, [hl]
 
     ; Check if we're out of bounds vertically
-    ; if not, load the new value to wBallPosition
+    ; if not, load the new value to wBallPosition.y
     cp a, 1
     jr c, .outOfBounds
     cp a, 144
     jr nc, .outOfBounds
-    ld [wBallPosition], a
+    ld [wBallPosition.y], a
+
+    jr .storePositions
 
 .outOfBounds
-    ld a, [wBallPosition]
+    ; Load wBallVelocity.y, and then invert it
+    ld hl, wBallVelocity.y
+    xor a
+    sub [hl]
+    ld [hl], a
+
+    ; Load wBallVelocity.x, and then invert it
+    ASSERT wBallVelocity.y + 1 == wBallVelocity.x
+    inc hl
+    xor a
+    sub [hl]
+    ld [hl], a
+
+.storePositions
+    ld a, [wBallPosition.y]
     ld b, a
 
-    ld a, [wBallPosition + 1]
+    ld a, [wBallPosition.x]
     ld c, a
     
     jp RenderSimpleSprite
 
+
 SECTION "Position Vars", WRAM0
 ; Q12.4 fixed-point X posiition
 wPaddlePosition::
-    .x:: ds 2
+    .x:: DS 2
     ; Y doesn't change
 
 wBallPosition::

@@ -65,12 +65,12 @@ Reset::
 	; But only those for now
 
 	; DMG palette
-	ld a, %11100100
+	ld a, %00011011
 	ldh [hBGP], a
-	ld [hOBP0], a
+	ldh [hOBP0], a
 
 	ld a, %00011011
-    ld [hOBP1], a
+    ldh [hOBP1], a
 
 	xor a
 	ldh [hVBlankFlag], a
